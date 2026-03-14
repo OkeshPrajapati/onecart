@@ -34,22 +34,58 @@ export const addToCartController = async (req, res) => {
   }
 };
 
-export const updateCartcontroller = async(req,res)=>{
-    try {
-        let {itemId, size , quantity} = req.body;
-        const userData = await UserModel.findById(req.userId)
-        let cartData = await userData.cartData
+// export const updateCartcontroller = async(req,res)=>{
+//     try {
+//         let {itemId, size , quantity} = req.body;
+//         const userData = await UserModel.findById(req.userId)
+//         let cartData = await userData.cartData || {}
 
 
-        cartData[itemId][size] = quantity
+//         cartData[itemId][size] = quantity
 
-        await UserModel.findByIdAndUpdate(req.userId,{cartData})
-        return res.status(200).json({message:"cart update "})
-    } catch (error) {
-        console.log("while updatecart",error)
-         return res.status(500).json({message:"cartupdate error "})
+//         await UserModel.findByIdAndUpdate(req.userId,{cartData})
+//         return res.status(200).json({message:"cart update "})
+//     } catch (error) {
+//         console.log("while updatecart",error)
+//          return res.status(500).json({message:"cartupdate error "})
+//     }
+// }
+
+export const updateCartcontroller = async (req, res) => {
+  try {
+
+    let { itemId, size, quantity } = req.body;
+
+    const userData = await UserModel.findById(req.userId);
+
+    let cartData = userData.cartData || {};
+
+    // item object create karo agar exist nahi hai
+    if (!cartData[itemId]) {
+      cartData[itemId] = {};
     }
-}
+
+    // size quantity update karo
+    cartData[itemId][size] = quantity;
+
+    await UserModel.findByIdAndUpdate(req.userId, { cartData });
+
+    return res.status(200).json({
+      success: true,
+      message: "Cart Updated"
+    });
+
+  } catch (error) {
+
+    console.log("while updatecart", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "cart update error"
+    });
+
+  }
+};
 
 export const getUserCartController = async (req, res) => {
   try {

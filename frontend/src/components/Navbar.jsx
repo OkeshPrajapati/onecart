@@ -140,6 +140,12 @@ function Navbar() {
                         onClick={handleLogout}>
                         Logout
                       </button>
+                         <Link
+                        to="/orders"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                      >
+                        Orders
+                      </Link>
                     </>
                   )}
                 </div>

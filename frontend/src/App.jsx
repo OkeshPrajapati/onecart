@@ -15,6 +15,9 @@ import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import PlaceOrder from './pages/PlaceOrder'
 import MyOrders from './pages/MyOrders'
+import PageNotFound from './pages/PageNotFound'
+
+
 
 const App = () => {
   let { userData } = useContext(userDataContext)
@@ -79,7 +82,10 @@ const App = () => {
           element={userData ? <MyOrders /> : <Navigate to="/login" state=
             {{ from: location.pathname }} />} />
 
+            <Route path="*" element={<PageNotFound />} />
+
       </Routes>
+  
     </>
   )
 }
