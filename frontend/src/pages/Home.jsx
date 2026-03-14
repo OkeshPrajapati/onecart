@@ -25,18 +25,7 @@ const Home = () => {
   }, []);
 
   return (
-    // <div className="relative w-full h-[60vh] md:h-[80vh] lg:h-screen overflow-hidden mt-[70px]">
-
-    //   <Background heroCount={heroCount} />
-
-    //   <Hero
-    //     heroData={heroData[heroCount]}
-    //     heroCount={heroCount}
-    //     setHeroCount={setHeroCount}
-    //   />
-    //   <Product/>
-    // </div>
-   
+  
   <>
     <div className="relative w-full h-[60vh] md:h-[80vh] lg:h-screen overflow-hidden mt-[70px]">
       <Background heroCount={heroCount} />

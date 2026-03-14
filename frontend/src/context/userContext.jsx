@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { createContext } from "react";
-import { AuthDataContext } from "./authContext";
+import { AuthDataContext } from "./AuthContext";
 import axios from "axios";
 import { useEffect } from "react";
 
