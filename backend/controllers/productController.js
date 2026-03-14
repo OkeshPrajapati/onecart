@@ -59,7 +59,7 @@ export const addProductController = async (req, res) => {
             price: Number(price),
             category,
             subCategory,
-            sizes: JSON.parse(sizes),
+            sizes: sizes ? JSON.parse(sizes) : [],
             date,
             bestSeller: bestSeller === "true",
             image1,
