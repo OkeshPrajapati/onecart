@@ -19,8 +19,8 @@ let app = express();
 
 
 export const razorpayInstance = new Razorpay({
-  key_id:process.env.VITE_RAZORPAY_TEST_API_KEY,
-  key_secret:process.env.VITE_RAZORPAY_TEST_KEY_SECRET
+  key_id: process.env.VITE_RAZORPAY_TEST_API_KEY,
+  key_secret: process.env.VITE_RAZORPAY_TEST_KEY_SECRET
 })
 
 app.use(express.json());
@@ -29,16 +29,16 @@ app.use("/uploads", express.static("uploads"));
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["https://onecart-frontendq.onrender.com", "https://onecart-admin12.onrender.com"],
     credentials: true,
   }),
 );
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRouter);
-app.use("/api/product",productRoutes)
-app.use("/api/cart",cartRoutes)
-app.use("/api/order",orderRoutes)
+app.use("/api/product", productRoutes)
+app.use("/api/cart", cartRoutes)
+app.use("/api/order", orderRoutes)
 
 connectDB();
 let PORT = process.env.PORT || 5000;
