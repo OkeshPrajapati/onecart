@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Registration from './pages/Registration'
 import Home from './pages/Home'
-import Login from './pages/login'
+import Login from './pages/Login'
 import Navbar from './components/Navbar'
 import { userDataContext } from './context/userContext'
 import About from './pages/About'
@@ -30,7 +30,7 @@ const App = () => {
         <Route path='/login' element={
           userData ?
             (<Navigate to={location.state?.from || "/"} />)
-            : (<Login />)
+            : (<Login/>)
         } />
 
 
