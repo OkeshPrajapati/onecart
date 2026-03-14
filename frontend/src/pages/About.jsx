@@ -1,4 +1,3 @@
-import React from "react";
 import { FiTruck, FiShield, FiRefreshCw, FiUsers } from "react-icons/fi";
 
 const About = () => {

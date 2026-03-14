@@ -8,7 +8,7 @@ import {
   FiX,
 } from "react-icons/fi";
 import { userDataContext } from "../context/userContext";
-import { AuthDataContext } from "../context/authContext";
+import { AuthDataContext } from "../context/AuthContext";
 import axios from "axios";
 import { shopDataContext } from "../context/ShopContext";
 
