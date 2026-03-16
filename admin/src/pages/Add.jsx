@@ -3,7 +3,7 @@ import { FaCloudUploadAlt, FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { authDataContext } from "../context/AuthContext";
 
-const AddItem = () => {
+const Add = () => {
   const { serverUrl } = useContext(authDataContext);
 
   const [formData, setFormData] = useState({
@@ -29,6 +29,7 @@ const AddItem = () => {
     kids: ["Topwear", "Bottomwear", "Winterwear"],
   };
 
+  // handle input change
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -39,6 +40,7 @@ const AddItem = () => {
     }
   };
 
+  // size select
   const handleSizeChange = (size) => {
     if (formData.sizes.includes(size)) {
       setFormData({
@@ -53,10 +55,15 @@ const AddItem = () => {
     }
   };
 
+  // image select
   const handleImageChange = (e) => {
-    setImages({ ...images, [e.target.name]: e.target.files[0] });
+    setImages({
+      ...images,
+      [e.target.name]: e.target.files[0],
+    });
   };
 
+  // submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -72,14 +79,38 @@ const AddItem = () => {
       });
 
       Object.keys(images).forEach((key) => {
-        if (images[key]) data.append(key, images[key]);
+        if (images[key]) {
+          data.append(key, images[key]);
+        }
       });
 
       await axios.post(serverUrl + "/api/product/addproduct", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         withCredentials: true,
       });
 
       alert("Product Added Successfully ✅");
+
+      // reset form
+      setFormData({
+        name: "",
+        description: "",
+        price: "",
+        category: "men",
+        subCategory: "",
+        sizes: [],
+        bestSeller: false,
+      });
+
+      setImages({
+        image1: null,
+        image2: null,
+        image3: null,
+        image4: null,
+      });
+
     } catch (error) {
       console.log(error);
       alert("Error adding product ❌");
@@ -200,7 +231,7 @@ const AddItem = () => {
           {/* Image Upload */}
           <div>
             <label className="block mb-3 text-gray-400">
-              Upload Images (4)
+              Upload Images
             </label>
 
             <div className="grid md:grid-cols-4 gap-4">
@@ -209,14 +240,24 @@ const AddItem = () => {
                   key={img}
                   className="flex flex-col items-center justify-center h-32 bg-gray-800 border border-dashed border-gray-600 rounded-xl cursor-pointer hover:border-purple-500 transition"
                 >
-                  <FaCloudUploadAlt className="text-2xl text-purple-500 mb-2" />
-                  <span className="text-sm text-gray-400">Upload</span>
+                  {images[img] ? (
+                    <img
+                      src={URL.createObjectURL(images[img])}
+                      className="h-full w-full object-cover rounded-xl"
+                      alt="preview"
+                    />
+                  ) : (
+                    <>
+                      <FaCloudUploadAlt className="text-2xl text-purple-500 mb-2" />
+                      <span className="text-sm text-gray-400">Upload</span>
+                    </>
+                  )}
+
                   <input
                     type="file"
                     name={img}
                     onChange={handleImageChange}
                     className="hidden"
-                    required
                   />
                 </label>
               ))}
@@ -249,4 +290,4 @@ const AddItem = () => {
   );
 };
 
-export default AddItem;
+export default Add;
