@@ -8,6 +8,6 @@ let storage = multer.diskStorage({
         cb(null,Date.now()+"-"+file.originalname)
     }
 });
-let uploads = multer({ storage })
+let upload = multer({ storage })
 
-export default uploads;
+export default upload;
