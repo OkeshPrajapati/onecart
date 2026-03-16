@@ -9,7 +9,6 @@ try {
 }
 }
 
-
 export const genToken1 = async(email)=>{
 try {
     let token = await JWt.sign({email},process.env.JWT_SECRET,{expiresIn:"7d"})

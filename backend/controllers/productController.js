@@ -1,6 +1,7 @@
 // import uploadOnCloudinary from "../config/cloudinary.js";
 
 import ProductModel from "../models/product.modal"
+import { uploadImage } from "../utils/imageUpload.js";
 
 // export const addProductController = async (req, res) => {
 //     try {
@@ -46,79 +47,85 @@ import ProductModel from "../models/product.modal"
 // }
 
 
-export const addProduct = async (req,res) => {
 
-  try{
 
-    const {name,price,category} = req.body
+export const addProduct = async (req, res) => {
 
-    if(!req.file){
+  try {
+
+    const { name, price, category } = req.body;
+
+    if (!req.file) {
       return res.status(400).json({
-        success:false,
-        message:"Image required"
+        success: false,
+        message: "Image required"
       })
     }
+
+    const imageUrl = await uploadImage(req.file);
 
     const product = new ProductModel({
 
       name,
       price,
       category,
-      image:req.file.filename
+      image: imageUrl
 
     })
 
-    await product.save()
+    await product.save();
 
     res.json({
-      success:true,
-      message:"Product Added"
+      success: true,
+      message: "Product Added",
+      product
     })
 
   }
 
-  catch(error){
+  catch (error) {
 
-    console.log(error)
+    console.log(error);
 
     res.status(500).json({
-      success:false,
-      message:error.message
+      success: false,
+      message: error.message
     })
 
   }
 
 }
+
+
 export const getAllProductController = async (req, res) => {
-    try {
-        const product = await ProductModel.find({})
-        return res.status(200).json({
-            message: "fetched all products ",
-            product
-        })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            message: " error while fetching all products ",
+  try {
+    const product = await ProductModel.find({})
+    return res.status(200).json({
+      message: "fetched all products ",
+      product
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      message: " error while fetching all products ",
 
-        })
+    })
 
-    }
+  }
 }
 
-
 export const removeProductController = async (req, res) => {
-    try {
-        let { id } = req.params;
-        const product = await ProductModel.findByIdAndDelete(id)
-        return res.status(200).json({
-            message: "product removed successfully ",
-            product
-        })
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({
-            message: "error while removed product"
-        })
-    }
+  try {
+    let { id } = req.params;
+    const product = await ProductModel.findByIdAndDelete(id)
+    return res.status(200).json({
+      message: "product removed successfully ",
+      product
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      message: "error while removed product"
+    })
+  }
 }

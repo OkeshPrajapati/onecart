@@ -5,7 +5,8 @@ import adminAuth from "../middlewares/adminAuth.js"
 let productRoutes = express.Router()
 
 
-router.post("/addproduct", upload.single("image"),addProduct )
+// router.post("/addproduct", upload.single("image"),addProduct )
+router.post("/addproduct",upload.single("image"),addProduct);
 
 
 productRoutes.get("/list",getAllProductController)
